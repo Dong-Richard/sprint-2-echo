@@ -48,8 +48,8 @@ function handleButtonClick() {
     }
     else {
         var command = maybeInput.value.split(" ")[0];
-        if (command === "get") {
-            handleGetRequest(maybeInput.value);
+        if (command === "view") {
+            handleViewRequest(maybeInput.value);
         }
         else if (command === "mode") {
             handleModeRequest();
@@ -78,7 +78,7 @@ function handleButtonClick() {
  * @returns: void
  * @param: Input string to the command terminal, the string will be used to get the file path of the csv to be printed.
  */
-function handleGetRequest(input) {
+function handleViewRequest(input) {
     var historyOutput = new Array();
     if (mode == 1) {
         historyOutput.push("Command: ".concat(input));

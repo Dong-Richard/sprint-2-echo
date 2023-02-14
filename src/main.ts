@@ -51,8 +51,8 @@ function handleButtonClick() {
         console.log(`Found element ${maybeInput}, but it wasn't an button`)
     } else {
         let command: string = maybeInput.value.split(" ")[0];
-        if(command === "get"){
-            handleGetRequest(maybeInput.value)
+        if(command === "view"){
+            handleViewRequest(maybeInput.value)
         }else if (command === "mode"){
             handleModeRequest()
         }else if (command === "load_csv"){
@@ -80,7 +80,7 @@ function handleButtonClick() {
  * @returns: void
  * @param: Input string to the command terminal, the string will be used to get the file path of the csv to be printed. 
  */
-function handleGetRequest(input: string) {
+function handleViewRequest(input: string) {
     let historyOutput: Array<string> = new Array()
     if (mode == 1){
         historyOutput.push(`Command: ${input}`);
