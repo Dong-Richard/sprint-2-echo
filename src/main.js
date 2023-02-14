@@ -47,11 +47,19 @@ function handleButtonClick() {
         console.log("Found element ".concat(maybeInput, ", but it wasn't an button"));
     }
     else {
-        if (maybeInput.value.split(' ')[0] === "get") {
+        var command = maybeInput.value.split(" ")[0];
+        if (command === "get") {
             handleGetRequest(maybeInput.value);
         }
+        else if (command === "mode") {
+            handleModeRequest();
+        }
         else {
-            var historyOutput = new Array("Command: " + maybeInput.value, "Output: Not a valid command");
+            var historyOutput = new Array();
+            if (mode == 1) {
+                historyOutput.push("Command: " + maybeInput.value);
+            }
+            historyOutput.push("Output: Not a valid command");
             history.push(historyOutput);
         }
         renderHTML();
@@ -68,8 +76,26 @@ function handleButtonClick() {
  * @param: Input string to the command terminal, the string will be used to get the file path of the csv to be printed.
  */
 function handleGetRequest(input) {
-    var historyOutput = new Array("Command: ".concat(input), "Output: " + JSON.stringify(getCSV()));
+    var historyOutput = new Array();
+    if (mode == 1) {
+        historyOutput.push("Command: ".concat(input));
+    }
+    historyOutput.push("Output: " + JSON.stringify(getCSV()));
     history.push(historyOutput);
+}
+//mode 0 is brief, mode 1 is verbose
+var mode = 0;
+function handleModeRequest() {
+    if (mode == 0) {
+        mode = 1;
+        var historyOutput = new Array("Changed to verbose mode");
+        history.push(historyOutput);
+    }
+    else {
+        mode = 0;
+        var historyOutput = new Array("Changed to brief mode");
+        history.push(historyOutput);
+    }
 }
 /**
  * Handle other User Stories here:

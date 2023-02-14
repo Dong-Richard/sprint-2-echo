@@ -50,10 +50,17 @@ function handleButtonClick() {
     } else if(!(maybeInput instanceof HTMLInputElement)) {
         console.log(`Found element ${maybeInput}, but it wasn't an button`)
     } else {
-        if(maybeInput.value.split(' ')[0] === "get"){
+        let command: string = maybeInput.value.split(" ")[0];
+        if(command === "get"){
             handleGetRequest(maybeInput.value)
+        }else if (command === "mode"){
+            handleModeRequest()
         }else{
-            let historyOutput: Array<string> = new Array("Command: " + maybeInput.value, "Output: Not a valid command")
+            let historyOutput: Array<string> = new Array()
+            if(mode == 1){
+                historyOutput.push("Command: " + maybeInput.value)
+            }
+            historyOutput.push("Output: Not a valid command")
             history.push(historyOutput)
         }
         renderHTML()
@@ -72,8 +79,34 @@ function handleButtonClick() {
  * @param: Input string to the command terminal, the string will be used to get the file path of the csv to be printed. 
  */
 function handleGetRequest(input: string) {
-    let historyOutput: Array<string> = new Array(`Command: ${input}`, "Output: " + JSON.stringify(getCSV()))
+    let historyOutput: Array<string> = new Array()
+    if (mode == 1){
+        historyOutput.push(`Command: ${input}`);
+    }
+    historyOutput.push("Output: " + JSON.stringify(getCSV()));
     history.push(historyOutput)
+}
+
+//mode 0 is brief, mode 1 is verbose
+var mode = 0
+
+/**
+ * A helper function to handle a mode request. It will change the mode variable from 0 to 1 or 1 to 0, with 0 representing
+ * brief mode and 1 representing verbose mode. It will then output a message to the terminal to signify what mode it has 
+ * been changed to. 
+ * 
+ * @returns: void
+ */
+function handleModeRequest(){
+    if(mode == 0){
+        mode = 1
+        let historyOutput: Array<string> = new Array("Changed to verbose mode")
+        history.push(historyOutput)
+    }else{
+        mode = 0
+        let historyOutput: Array<string> = new Array("Changed to brief mode");
+        history.push(historyOutput);
+    }
 }
 
 /**
