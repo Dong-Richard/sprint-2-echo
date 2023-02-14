@@ -60,13 +60,26 @@ function handleButtonClick() {
         }else{
             let historyOutput: Array<string> = new Array()
             if(mode == 1){
-                historyOutput.push("Command: " + maybeInput.value)
+                historyOutput.push("<p>Command:" + maybeInput.value + "</p>")
             }
-            historyOutput.push("Output: Not a valid command")
+            historyOutput.push("<p>Output: Not a valid command</p>")
             history.push(historyOutput)
         }
         renderHTML()
     }
+}
+
+function tableConverter(): string{
+    let result : string = "<table>"
+    currentCSV.forEach((output: (String | Number)[]) =>{
+        result += "<tr>";
+        output.forEach((thing : (String | Number)) => {
+            result += "<td>" + thing + "</td>";
+        })
+        result += "</tr>";
+    })
+    result += "</table>";
+    return result;
 }
 
 /**
@@ -83,9 +96,9 @@ function handleButtonClick() {
 function handleViewRequest(input: string) {
     let historyOutput: Array<string> = new Array()
     if (mode == 1){
-        historyOutput.push(`Command: ${input}`);
+        historyOutput.push(`<p>Command: ${input}</p>`);
     }
-    historyOutput.push("Output: " + JSON.stringify(currentCSV));
+    historyOutput.push("<p>Output: " + tableConverter() + "</p>");
     history.push(historyOutput)
 }
 
@@ -102,11 +115,11 @@ var mode = 0
 function handleModeRequest(){
     if(mode == 0){
         mode = 1
-        let historyOutput: Array<string> = new Array("Changed to verbose mode")
+        let historyOutput: Array<string> = new Array("<p>Changed to verbose mode</p>")
         history.push(historyOutput)
     }else{
         mode = 0
-        let historyOutput: Array<string> = new Array("Changed to brief mode")
+        let historyOutput: Array<string> = new Array("<p>Changed to brief mode</p>")
         history.push(historyOutput);
     }
 }
@@ -124,9 +137,9 @@ function handleLoadRequest(input: string){
       historyOutput.push(`Command: ${input}`)
     }
     if (loadCSV(input.split(' ')[1])){
-        historyOutput.push("CSV Loaded Successfully")
+        historyOutput.push("<p>CSV Loaded Successfully</p>")
     }else{
-        historyOutput.push("CSV filepath not found")
+        historyOutput.push("<p>CSV filepath not found</p>")
     }
     history.push(historyOutput);
 }
@@ -149,7 +162,7 @@ function renderHTML() {
     // For every guess array in GUESSES...
     history.forEach((output: Array<string>) => {
         output.forEach((line: string) => {
-            newHtml += `<p>${line}</p>`
+            newHtml += `${line}`
         })
     })
 
