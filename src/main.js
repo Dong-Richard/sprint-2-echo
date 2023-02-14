@@ -1,4 +1,4 @@
-import { getCSV } from "./mockedJson.js";
+import { loadCSV, currentCSV } from "./mockedJson.js";
 var history = [];
 // The window.onload callback is invoked when the window is first loaded by the browser
 window.onload = function () {
@@ -54,6 +54,9 @@ function handleButtonClick() {
         else if (command === "mode") {
             handleModeRequest();
         }
+        else if (command === "load_csv") {
+            handleLoadRequest(maybeInput.value);
+        }
         else {
             var historyOutput = new Array();
             if (mode == 1) {
@@ -80,11 +83,18 @@ function handleGetRequest(input) {
     if (mode == 1) {
         historyOutput.push("Command: ".concat(input));
     }
-    historyOutput.push("Output: " + JSON.stringify(getCSV()));
+    historyOutput.push("Output: " + JSON.stringify(currentCSV));
     history.push(historyOutput);
 }
 //mode 0 is brief, mode 1 is verbose
 var mode = 0;
+/**
+ * A helper function to handle a mode request. It will change the mode variable from 0 to 1 or 1 to 0, with 0 representing
+ * brief mode and 1 representing verbose mode. It will then output a message to the terminal to signify what mode it has
+ * been changed to.
+ *
+ * @returns: void
+ */
 function handleModeRequest() {
     if (mode == 0) {
         mode = 1;
@@ -96,6 +106,19 @@ function handleModeRequest() {
         var historyOutput = new Array("Changed to brief mode");
         history.push(historyOutput);
     }
+}
+function handleLoadRequest(input) {
+    var historyOutput = new Array();
+    if (mode == 1) {
+        historyOutput.push("Command: ".concat(input));
+    }
+    if (loadCSV(input.split(' ')[1])) {
+        historyOutput.push("CSV Loaded Successfully");
+    }
+    else {
+        historyOutput.push("CSV filepath not found");
+    }
+    history.push(historyOutput);
 }
 /**
  * Handle other User Stories here:

@@ -1,4 +1,4 @@
-import { getCSV } from "./mockedJson.js"
+import { loadCSV, currentCSV } from "./mockedJson.js"
 
 let history: Array<Array<string>> = []
 
@@ -55,6 +55,8 @@ function handleButtonClick() {
             handleGetRequest(maybeInput.value)
         }else if (command === "mode"){
             handleModeRequest()
+        }else if (command === "load_csv"){
+            handleLoadRequest(maybeInput.value)
         }else{
             let historyOutput: Array<string> = new Array()
             if(mode == 1){
@@ -83,7 +85,7 @@ function handleGetRequest(input: string) {
     if (mode == 1){
         historyOutput.push(`Command: ${input}`);
     }
-    historyOutput.push("Output: " + JSON.stringify(getCSV()));
+    historyOutput.push("Output: " + JSON.stringify(currentCSV));
     history.push(historyOutput)
 }
 
@@ -104,9 +106,22 @@ function handleModeRequest(){
         history.push(historyOutput)
     }else{
         mode = 0
-        let historyOutput: Array<string> = new Array("Changed to brief mode");
+        let historyOutput: Array<string> = new Array("Changed to brief mode")
         history.push(historyOutput);
     }
+}
+
+function handleLoadRequest(input: string){
+    let historyOutput: Array<string> = new Array()
+    if (mode == 1) {
+      historyOutput.push(`Command: ${input}`)
+    }
+    if (loadCSV(input.split(' ')[1])){
+        historyOutput.push("CSV Loaded Successfully")
+    }else{
+        historyOutput.push("CSV filepath not found")
+    }
+    history.push(historyOutput);
 }
 
 /**
