@@ -111,6 +111,13 @@ function handleModeRequest(){
     }
 }
 
+/**
+ * A helper function to handle a load_csv request. It will look through a database (in this case its mocked) and if it finds
+ * the file specified, it will load the data into memory, and return a success error code, and return a failure error code
+ * otherwise.
+ * 
+ * @param input The filepath to be found 
+ */
 function handleLoadRequest(input: string){
     let historyOutput: Array<string> = new Array()
     if (mode == 1) {
