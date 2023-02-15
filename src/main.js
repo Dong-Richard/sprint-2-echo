@@ -60,13 +60,25 @@ function handleButtonClick() {
         else {
             var historyOutput = new Array();
             if (mode == 1) {
-                historyOutput.push("Command: " + maybeInput.value);
+                historyOutput.push("<p>Command:" + maybeInput.value + "</p>");
             }
-            historyOutput.push("Output: Not a valid command");
+            historyOutput.push("<p>Output: Not a valid command</p>");
             history.push(historyOutput);
         }
         renderHTML();
     }
+}
+function tableConverter() {
+    var result = "<table>";
+    currentCSV.forEach(function (output) {
+        result += "<tr>";
+        output.forEach(function (thing) {
+            result += "<td>" + thing + "</td>";
+        });
+        result += "</tr>";
+    });
+    result += "</table>";
+    return result;
 }
 /**
  * This stuff is just copied over from Tim's site ^
@@ -81,9 +93,9 @@ function handleButtonClick() {
 function handleViewRequest(input) {
     var historyOutput = new Array();
     if (mode == 1) {
-        historyOutput.push("Command: ".concat(input));
+        historyOutput.push("<p>Command: ".concat(input, "</p>"));
     }
-    historyOutput.push("Output: " + JSON.stringify(currentCSV));
+    historyOutput.push("<p>Output: " + tableConverter() + "</p>");
     history.push(historyOutput);
 }
 //mode 0 is brief, mode 1 is verbose
@@ -98,12 +110,12 @@ var mode = 0;
 function handleModeRequest() {
     if (mode == 0) {
         mode = 1;
-        var historyOutput = new Array("Changed to verbose mode");
+        var historyOutput = new Array("<p>Changed to verbose mode</p>");
         history.push(historyOutput);
     }
     else {
         mode = 0;
-        var historyOutput = new Array("Changed to brief mode");
+        var historyOutput = new Array("<p>Changed to brief mode</p>");
         history.push(historyOutput);
     }
 }
@@ -120,10 +132,10 @@ function handleLoadRequest(input) {
         historyOutput.push("Command: ".concat(input));
     }
     if (loadCSV(input.split(' ')[1])) {
-        historyOutput.push("CSV Loaded Successfully");
+        historyOutput.push("<p>CSV Loaded Successfully</p>");
     }
     else {
-        historyOutput.push("CSV filepath not found");
+        historyOutput.push("<p>CSV filepath not found</p>");
     }
     history.push(historyOutput);
 }
@@ -142,7 +154,7 @@ function renderHTML() {
     // For every guess array in GUESSES...
     history.forEach(function (output) {
         output.forEach(function (line) {
-            newHtml += "<p>".concat(line, "</p>");
+            newHtml += "".concat(line);
         });
     });
     // Replace the contents of the old-rounds <div> with the HTML we generated above    
