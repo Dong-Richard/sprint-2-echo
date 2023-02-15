@@ -20,7 +20,9 @@ beforeEach( () => {
   document.body.innerHTML = startHTML
 })
 
-
+/**
+ * Tests that load requests print the correct html 
+ */
 test('handleLoadRequest', () => {
   var maybeInput = document.getElementById("repl-command-box");
   // Assumption: there's only one thing
@@ -43,6 +45,9 @@ test('handleLoadRequest', () => {
   expect(mock.currentCSV).toEqual(csvData);
 })
 
+/**
+ * Tests that an invalid load request prints the correct error message
+ */
 test('invalid load request', () => {
    var maybeInput = document.getElementById("repl-command-box");
    // Assumption: there's only one thing
@@ -58,6 +63,9 @@ test('invalid load request', () => {
    }
 })
 
+/**
+ * Tests that loadCSV loads the correct csv given a filepath
+ */
 test('loadCSV', () => {
   let csvData: (Number | String)[][] = []
   expect(mock.currentCSV).toEqual(csvData)
@@ -103,6 +111,9 @@ test('handleViewRequest', () => {
   }
 })
 
+/**
+ * Tests that view when no csv is loaded prints the correct error message
+ */
 test('invalid view request', () => {
   var maybeInput = document.getElementById("repl-command-box");
 

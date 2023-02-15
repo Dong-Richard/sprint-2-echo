@@ -1,7 +1,8 @@
 /**
+ * Loads a CSV from the database into memory. In the real program, this is where it would search through the 
+ * database and parse into an array for usage in the main program.
  * 
- * 
- * @param filepath 
+ * @param filepath : The filepath to the CSV to be read
  * 
  * @returns 
  */
@@ -15,8 +16,11 @@ function loadCSV(filepath: string): Number{
     }
 }
 
+//The current CSV stored in memory
 var currentCSV: (Number | String)[][] = []
 
+
+//Mock datasets and map
 const csvData1 = [
   [1, 2, 3, 4, 5],
   ["The", "song", "remains", "the", "same."],
@@ -32,6 +36,8 @@ const dataMap = new Map<String, (String | Number)[][]>()
 dataMap.set("mockedData1.csv", csvData1)
 dataMap.set("mockedData2.csv", csvData2)
 
+
+//Reset memory for testing purposes
 function resetCSV() {
     currentCSV = []
 }
