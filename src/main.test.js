@@ -21,7 +21,7 @@ test('handleLoadRequest', function () {
         [1, 2, 3, 4, 5],
         ["The", "song", "remains", "the", "same."],
     ];
-    expect(mock.currentCSV).toBe(csvData);
+    expect(mock.currentCSV).toEqual(csvData);
 });
 /**
  * Test that view requests work

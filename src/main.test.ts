@@ -16,6 +16,7 @@ const startHTML =
 
 beforeEach( () => {
   main.clearHistory()
+  mock.resetCSV()
   document.body.innerHTML = startHTML
 })
 
@@ -39,7 +40,11 @@ test('handleLoadRequest', () => {
     ["The", "song", "remains", "the", "same."],
   ];
 
-  expect(mock.currentCSV).toBe(csvData);
+  expect(mock.currentCSV).toEqual(csvData);
+})
+
+test('loadCSV', () => {
+  let csvData = []
 
 })
 

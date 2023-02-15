@@ -25,4 +25,8 @@ const dataMap = new Map<String, (String | Number)[][]>()
 dataMap.set("mockedData1.csv", csvData1)
 dataMap.set("mockedData2.csv", csvData2)
 
-export {loadCSV, currentCSV}
+function resetCSV() {
+    currentCSV = []
+}
+
+export {loadCSV, resetCSV, currentCSV}
