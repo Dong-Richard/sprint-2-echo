@@ -53,6 +53,8 @@ function handleButtonClick() {
         let command: string = maybeInput.value.split(" ")[0];
         if(command === "view"){
             handleViewRequest(maybeInput.value)
+        }else if(command === "search"){
+            search()
         }else if (command === "mode"){
             handleModeRequest()
         }else if (command === "load_csv"){
@@ -69,6 +71,16 @@ function handleButtonClick() {
     }
 }
 
+
+/**
+ * This stuff is just copied over from Tim's site ^
+ */
+
+/**
+ * This is a helper fucntion that is used with view command as it takes the CSV data and orgnaizes it into an html table 
+ * string which is then returned by this function
+ * @returns: this function returns the html table string
+ */
 function tableConverter(): string{
     let result : string = "<table class = 'table'>"
     currentCSV.forEach((output: (String | Number)[]) =>{
@@ -81,10 +93,6 @@ function tableConverter(): string{
     result += "</table>";
     return result;
 }
-
-/**
- * This stuff is just copied over from Tim's site ^
- */
 
 /**
  * A helper function to handle a get request. It will build a string with brackets denoting the contents of the 
@@ -184,6 +192,25 @@ function renderHTML() {
 
 function clearHistory() {
     history = []
+}
+
+/**
+ * This is the search function that is called by when the command search is entered into field. As of right now 
+ * it is a mocked version as we havent input the backend fucntionlity but what this function does for now is 
+ * check if the csv is loaded in, and if it is not we send message to the user that we have not recived a csv
+ * yet. Otherwise is the CSV is loaded in, we just print the first row of that csv no matter what to mock 
+ * what this fucntion would do 
+ */
+function search(){
+    let output : string = "<p>Here is your result:</p>"
+    let historyOutput: Array<string> = new Array()
+    if(currentCSV.length != 0){
+        output += "<p>" + currentCSV[0] + "</p>"
+    }else{
+        output += "<p>Sorry we could not find a CSV file to serach :(, please try again</p>"
+    }
+    historyOutput.push(output)
+    history.push(historyOutput)
 }
 
 

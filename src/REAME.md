@@ -1,6 +1,6 @@
-# Sprint 1 Echo
+# Sprint 2 Echo
 
-**Link to repo**: blahblahblah.github.io
+**Link to repo**:https://github.com/cs0320-s2023/sprint-2-rdong14-yzike
 
 ## Design Choices
 
