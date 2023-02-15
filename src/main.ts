@@ -102,8 +102,6 @@ function handleViewRequest(input: string) {
     history.push(historyOutput)
 }
 
-
-
 //mode 0 is brief, mode 1 is verbose
 var mode = 0
 
@@ -189,4 +187,4 @@ function clearHistory() {
 
 // Provide this to other modules (e.g., for testing!)
 // The configuration in this project will require /something/ to be exported.
-export {handleButtonClick, clearHistory}
+export {handleButtonClick, clearHistory, handleLoadRequest}

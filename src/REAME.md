@@ -17,8 +17,8 @@ prepareButtonClick() is a helper method that sets up an interactable button in t
 ### handleButtonClick() 
 handleButtonClick() is an event handler method. handleButtonClick will read in the input from the REPL, and call either handleGetRequest or handleStatsRequest to handle the "get" command and the "stats" command. Then, the screen will be updated with renderHTML. 
 
-### handleGetRequest()
-handleGetRequest() will handle the get built-in command. It will retrieve the CSV data from mock.json, and print it out using square brackets [] to denote an array, and push that string to the HTML history, where it will then render with renderHTML
+### handleViewRequest()
+handleViewRequest() will handle the get built-in command. It will retrieve the CSV data from mock.json, and print it out using square brackets [] to denote an array, and push that string to the HTML history, where it will then render with renderHTML
 
 ### renderHTML()
 renderHTML will take the contents of the history arraylist, and update the repl-history div's internal HTML with the contents of the history arraylist. 

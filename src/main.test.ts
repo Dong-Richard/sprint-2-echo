@@ -1,5 +1,6 @@
 // all exports from main will now be available as main.X
 import * as main from './main';
+import * as mock from './mockedJson.js'
 
 const startHTML = 
 `<div class="repl">
@@ -19,22 +20,55 @@ beforeEach( () => {
 })
 
 
+test('handleLoadRequest', () => {
+  var maybeInput = document.getElementById("repl-command-box");
+  // Assumption: there's only one thing
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "load_csv mockedData1.csv";
+  }
+  main.handleButtonClick();
+  var replHistory = document.getElementById("repl-history");
+  if (replHistory instanceof HTMLElement) {
+    expect(replHistory.innerHTML.trim()).toBe(
+      '<p>CSV Loaded Successfully</p>'
+    );
+  }
+
+  let csvData = [
+    [1, 2, 3, 4, 5],
+    ["The", "song", "remains", "the", "same."],
+  ];
+
+  expect(mock.currentCSV).toBe(csvData);
+
+})
+
 
 /**
- * Test that get requests work
+ * Test that view requests work
  */
-test('handleGetRequest', () => {
-  var maybeInput = document.getElementById('repl-command-box');
-    // Assumption: there's only one thing
-  if(maybeInput instanceof HTMLInputElement){
-    maybeInput.value = "get something.csv"
+test('handleViewRequest', () => {
+  var maybeInput = document.getElementById("repl-command-box");
+
+  //we need to load the csv before viewing it
+  mock.loadCSV("mockedData1.csv");
+
+  // Assumption: there's only one thing
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "view";
   }
-  main.handleButtonClick()
+  main.handleButtonClick();
   var replHistory = document.getElementById("repl-history");
-  if(replHistory instanceof HTMLElement){
-    expect(replHistory.innerHTML.trim()).toBe("<p>Command: get something.csv</p><p>Output: [[1,2,3,4,5],[\"The\",\"song\",\"remains\",\"the\",\"same.\"]]</p>")
+  if (replHistory instanceof HTMLElement) {
+    expect(replHistory.innerHTML.trim()).toBe(
+      `<p>Output: </p><table class=\"table\"><tbody><tr><td class=\"table\">1</td><td class=\"table\">2</td>` +
+        `<td class=\"table\">3</td><td class=\"table\">4</td><td class=\"table\">5</td></tr><tr><td class=\"table\">The</td>` +
+        `<td class=\"table\">song</td><td class=\"table\">remains</td><td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table><p></p>`
+    );
   }
 })
+
+
 
 /**
  * Tests that invalid requests work
@@ -48,7 +82,7 @@ test('handleInvalidRequest', () => {
   main.handleButtonClick()
   var replHistory = document.getElementById("repl-history");
   if(replHistory instanceof HTMLElement){
-    expect(replHistory.innerHTML.trim()).toBe("<p>Command: something invalid</p><p>Output: Not a valid command</p>")
+    expect(replHistory.innerHTML.trim()).toBe("<p>Output: Not a valid command</p>")
   }
 })
 
