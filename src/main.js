@@ -69,11 +69,11 @@ function handleButtonClick() {
     }
 }
 function tableConverter() {
-    var result = "<table>";
+    var result = "<table class = 'table'>";
     currentCSV.forEach(function (output) {
         result += "<tr>";
         output.forEach(function (thing) {
-            result += "<td>" + thing + "</td>";
+            result += "<td class = 'table'>" + thing + "</td>";
         });
         result += "</tr>";
     });

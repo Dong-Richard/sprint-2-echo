@@ -70,11 +70,11 @@ function handleButtonClick() {
 }
 
 function tableConverter(): string{
-    let result : string = "<table>"
+    let result : string = "<table class = 'table'>"
     currentCSV.forEach((output: (String | Number)[]) =>{
         result += "<tr>";
         output.forEach((thing : (String | Number)) => {
-            result += "<td>" + thing + "</td>";
+            result += "<td class = 'table'>" + thing + "</td>";
         })
         result += "</tr>";
     })
