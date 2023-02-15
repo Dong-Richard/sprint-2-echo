@@ -89,6 +89,8 @@ function handleViewRequest(input: string) {
     history.push(historyOutput)
 }
 
+
+
 //mode 0 is brief, mode 1 is verbose
 var mode = 0
 
