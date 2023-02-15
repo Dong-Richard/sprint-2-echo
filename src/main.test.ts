@@ -38,14 +38,29 @@ test('handleLoadRequest', () => {
   let csvData = [
     [1, 2, 3, 4, 5],
     ["The", "song", "remains", "the", "same."],
-  ];
+  ]
 
   expect(mock.currentCSV).toEqual(csvData);
 })
 
 test('loadCSV', () => {
-  let csvData = []
+  let csvData: (Number | String)[][] = []
+  expect(mock.currentCSV).toEqual(csvData)
 
+  mock.loadCSV("mockedData1.csv")
+  csvData = [
+    [1, 2, 3, 4, 5],
+    ["The", "song", "remains", "the", "same."],
+  ]
+  expect(mock.currentCSV).toEqual(csvData)
+
+  mock.loadCSV("mockedData2.csv")
+  csvData = [
+    ["First Name", "Last Name", "Class", "Role"],
+    ["Nim", "Telson", "CSCI 0320", "Student"],
+    ["Tim", "Nelson", "CSCI 0320", "Student"],
+  ];
+  expect(mock.currentCSV).toEqual(csvData);
 })
 
 
