@@ -106,7 +106,11 @@ function handleViewRequest(input: string) {
     if (mode == 1){
         historyOutput.push(`<p>Command: ${input}</p>`);
     }
-    historyOutput.push("<p>Output: " + tableConverter() + "</p>");
+    if(currentCSV.length != 0){
+        historyOutput.push("<p>Output: " + tableConverter() + "</p>");
+    }else{
+        historyOutput.push("<p>No CSV Loaded!</p>")
+    }
     history.push(historyOutput)
 }
 
@@ -210,6 +214,7 @@ function renderHTML() {
 
 function clearHistory() {
     history = []
+    mode = 0
 }
 
 

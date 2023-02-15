@@ -1,3 +1,10 @@
+/**
+ * 
+ * 
+ * @param filepath 
+ * 
+ * @returns 
+ */
 function loadCSV(filepath: string): Number{
     let data = dataMap.get(filepath)
     if(data){

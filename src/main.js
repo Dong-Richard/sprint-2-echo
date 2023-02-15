@@ -103,7 +103,12 @@ function handleViewRequest(input) {
     if (mode == 1) {
         historyOutput.push("<p>Command: ".concat(input, "</p>"));
     }
-    historyOutput.push("<p>Output: " + tableConverter() + "</p>");
+    if (currentCSV.length != 0) {
+        historyOutput.push("<p>Output: " + tableConverter() + "</p>");
+    }
+    else {
+        historyOutput.push("<p>No CSV Loaded!</p>");
+    }
     history.push(historyOutput);
 }
 //mode 0 is brief, mode 1 is verbose

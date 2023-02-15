@@ -43,6 +43,21 @@ test('handleLoadRequest', () => {
   expect(mock.currentCSV).toEqual(csvData);
 })
 
+test('invalid load request', () => {
+   var maybeInput = document.getElementById("repl-command-box");
+   // Assumption: there's only one thing
+   if (maybeInput instanceof HTMLInputElement) {
+     maybeInput.value = "load_csv not real filepath";
+   }
+   main.handleButtonClick();
+   var replHistory = document.getElementById("repl-history");
+   if (replHistory instanceof HTMLElement) {
+     expect(replHistory.innerHTML.trim()).toBe(
+       "<p>CSV filepath not found</p>"
+     );
+   }
+})
+
 test('loadCSV', () => {
   let csvData: (Number | String)[][] = []
   expect(mock.currentCSV).toEqual(csvData)
@@ -88,6 +103,22 @@ test('handleViewRequest', () => {
   }
 })
 
+test('invalid view request', () => {
+  var maybeInput = document.getElementById("repl-command-box");
+
+  //we need to load the csv before viewing it
+  mock.loadCSV("not real");
+
+  // Assumption: there's only one thing
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "view";
+  }
+  main.handleButtonClick();
+  var replHistory = document.getElementById("repl-history");
+  if (replHistory instanceof HTMLElement) {
+    expect(replHistory.innerHTML.trim()).toBe("<p>No CSV Loaded!</p>")
+  }
+})
 
 
 /**

@@ -24,6 +24,18 @@ test('handleLoadRequest', function () {
     ];
     expect(mock.currentCSV).toEqual(csvData);
 });
+test('invalid load request', function () {
+    var maybeInput = document.getElementById("repl-command-box");
+    // Assumption: there's only one thing
+    if (maybeInput instanceof HTMLInputElement) {
+        maybeInput.value = "load_csv not real filepath";
+    }
+    main.handleButtonClick();
+    var replHistory = document.getElementById("repl-history");
+    if (replHistory instanceof HTMLElement) {
+        expect(replHistory.innerHTML.trim()).toBe("<p>CSV filepath not found</p>");
+    }
+});
 test('loadCSV', function () {
     var csvData = [];
     expect(mock.currentCSV).toEqual(csvData);
@@ -58,6 +70,20 @@ test('handleViewRequest', function () {
         expect(replHistory.innerHTML.trim()).toBe("<p>Output: </p><table class=\"table\"><tbody><tr><td class=\"table\">1</td><td class=\"table\">2</td>" +
             "<td class=\"table\">3</td><td class=\"table\">4</td><td class=\"table\">5</td></tr><tr><td class=\"table\">The</td>" +
             "<td class=\"table\">song</td><td class=\"table\">remains</td><td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table><p></p>");
+    }
+});
+test('invalid view request', function () {
+    var maybeInput = document.getElementById("repl-command-box");
+    //we need to load the csv before viewing it
+    mock.loadCSV("not real");
+    // Assumption: there's only one thing
+    if (maybeInput instanceof HTMLInputElement) {
+        maybeInput.value = "view";
+    }
+    main.handleButtonClick();
+    var replHistory = document.getElementById("repl-history");
+    if (replHistory instanceof HTMLElement) {
+        expect(replHistory.innerHTML.trim()).toBe("<p>No CSV Loaded!</p>");
     }
 });
 /**
