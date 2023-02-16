@@ -8,6 +8,21 @@ beforeEach(function () {
     document.body.innerHTML = startHTML;
 });
 /**
+ * Tests that invalid requests work
+ */
+test('handleInvalidRequest', function () {
+    var maybeInput = document.getElementById('repl-command-box');
+    // Assumption: there's only one thing
+    if (maybeInput instanceof HTMLInputElement) {
+        maybeInput.value = "something invalid";
+    }
+    main.handleButtonClick();
+    var replHistory = document.getElementById("repl-history");
+    if (replHistory instanceof HTMLElement) {
+        expect(replHistory.innerHTML.trim()).toBe("<p>Output: Not a valid command</p>");
+    }
+});
+/**
  * Tests that load requests print the correct html
  */
 test('handleLoadRequest', function () {
@@ -25,7 +40,7 @@ test('handleLoadRequest', function () {
         [1, 2, 3, 4, 5],
         ["The", "song", "remains", "the", "same."],
     ];
-    expect(mock.currentCSV).toEqual(csvData);
+    expect(mock.getCSV()).toEqual(csvData);
 });
 /**
  * Tests that an invalid load request prints the correct error message
@@ -47,20 +62,20 @@ test('invalid load request', function () {
  */
 test('loadCSV', function () {
     var csvData = [];
-    expect(mock.currentCSV).toEqual(csvData);
+    expect(mock.getCSV()).toEqual(csvData);
     mock.loadCSV("mockedData1.csv");
     csvData = [
         [1, 2, 3, 4, 5],
         ["The", "song", "remains", "the", "same."],
     ];
-    expect(mock.currentCSV).toEqual(csvData);
+    expect(mock.getCSV()).toEqual(csvData);
     mock.loadCSV("mockedData2.csv");
     csvData = [
         ["First Name", "Last Name", "Class", "Role"],
         ["Nim", "Telson", "CSCI 0320", "Student"],
         ["Tim", "Nelson", "CSCI 0320", "Student"],
     ];
-    expect(mock.currentCSV).toEqual(csvData);
+    expect(mock.getCSV()).toEqual(csvData);
 });
 /**
  * Test that view requests work
@@ -76,9 +91,9 @@ test('handleViewRequest', function () {
     main.handleButtonClick();
     var replHistory = document.getElementById("repl-history");
     if (replHistory instanceof HTMLElement) {
-        expect(replHistory.innerHTML.trim()).toBe("<p>Output: </p><table class=\"table\"><tbody><tr><td class=\"table\">1</td><td class=\"table\">2</td>" +
+        expect(replHistory.innerHTML.trim()).toBe("<table class=\"table\"><tbody><tr><td class=\"table\">1</td><td class=\"table\">2</td>" +
             "<td class=\"table\">3</td><td class=\"table\">4</td><td class=\"table\">5</td></tr><tr><td class=\"table\">The</td>" +
-            "<td class=\"table\">song</td><td class=\"table\">remains</td><td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table><p></p>");
+            "<td class=\"table\">song</td><td class=\"table\">remains</td><td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table>");
     }
 });
 /**
@@ -99,21 +114,6 @@ test('invalid view request', function () {
     }
 });
 /**
- * Tests that invalid requests work
- */
-test('handleInvalidRequest', function () {
-    var maybeInput = document.getElementById('repl-command-box');
-    // Assumption: there's only one thing
-    if (maybeInput instanceof HTMLInputElement) {
-        maybeInput.value = "something invalid";
-    }
-    main.handleButtonClick();
-    var replHistory = document.getElementById("repl-history");
-    if (replHistory instanceof HTMLElement) {
-        expect(replHistory.innerHTML.trim()).toBe("<p>Output: Not a valid command</p>");
-    }
-});
-/**
  * Tests that seraching works when there is no CSV sends the right message
  */
 test('handleNoCSVSearch', function () {
@@ -125,7 +125,7 @@ test('handleNoCSVSearch', function () {
     main.handleButtonClick();
     var replHistory = document.getElementById("repl-history");
     if (replHistory instanceof HTMLElement) {
-        expect(replHistory.innerHTML.trim()).toBe("<p>Here is your result:</p><p>Sorry we could not find a CSV file to serach :(, please try again</p>");
+        expect(replHistory.innerHTML.trim()).toBe("<p>Sorry we could not find a CSV file to serach :(, please try again</p>");
     }
 });
 /**
@@ -142,7 +142,7 @@ test('handleNormalSearch', function () {
     main.handleButtonClick();
     var replHistory = document.getElementById("repl-history");
     if (replHistory instanceof HTMLElement) {
-        expect(replHistory.innerHTML.trim()).toBe("<p>Here is your result:</p><p>1,2,3,4,5</p>");
+        expect(replHistory.innerHTML.trim()).toBe("<p>1,2,3,4,5</p>");
     }
 });
 /**
@@ -159,7 +159,7 @@ test('handleNormalSearch2', function () {
     main.handleButtonClick();
     var replHistory = document.getElementById("repl-history");
     if (replHistory instanceof HTMLElement) {
-        expect(replHistory.innerHTML.trim()).toBe("<p>Here is your result:</p><p>First Name,Last Name,Class,Role</p>");
+        expect(replHistory.innerHTML.trim()).toBe("<p>First Name,Last Name,Class,Role</p>");
     }
 });
 /**
@@ -190,10 +190,10 @@ test('handleModeViewStartBrief', function () {
     main.handleButtonClick();
     var replHistory = document.getElementById("repl-history");
     if (replHistory instanceof HTMLElement) {
-        expect(replHistory.innerHTML.trim()).toBe("<p>Output: </p><table class=\"table\"><tbody><tr><td class=\"table\">1</td><td class=\"table\">2</td><td" +
+        expect(replHistory.innerHTML.trim()).toBe("<table class=\"table\"><tbody><tr><td class=\"table\">1</td><td class=\"table\">2</td><td" +
             " class=\"table\">3</td><td class=\"table\">4</td><td class=\"table\">5</td></tr><tr><td class=\"table\">" +
             "The</td><td class=\"table\">song</td><td class=\"table\">remains</td><td class=\"table\">the</td><td" +
-            " class=\"table\">same.</td></tr></tbody></table><p></p>");
+            " class=\"table\">same.</td></tr></tbody></table>");
     }
 });
 /**
@@ -210,7 +210,7 @@ test('handleModeViewStartBrief', function () {
     main.handleButtonClick();
     var replHistory = document.getElementById("repl-history");
     if (replHistory instanceof HTMLElement) {
-        expect(replHistory.innerHTML.trim()).toBe("<p>Here is your result:</p><p>1,2,3,4,5</p>");
+        expect(replHistory.innerHTML.trim()).toBe("<p>1,2,3,4,5</p>");
     }
 });
 /**
@@ -274,7 +274,7 @@ test('handleSearchModeChange', function () {
     main.handleButtonClick();
     if (replHistory instanceof HTMLElement) {
         expect(replHistory.innerHTML.trim()).toBe("<p>Changed to verbose mode</p>" +
-            "<p>Command: search</p><p>Here is your result:</p><p>1,2,3,4,5</p>");
+            "<p>Command: search</p><p>Output: 1,2,3,4,5</p>");
     }
     //Switching it back to brief
     if (maybeInput instanceof HTMLInputElement) {
@@ -287,9 +287,9 @@ test('handleSearchModeChange', function () {
     main.handleButtonClick();
     if (replHistory instanceof HTMLElement) {
         expect(replHistory.innerHTML.trim()).toBe("<p>Changed to verbose mode</p>" +
-            "<p>Command: search</p><p>Here is your result:</p><p>1,2,3,4,5</p>" +
+            "<p>Command: search</p><p>Output: 1,2,3,4,5</p>" +
             "<p>Changed to brief mode</p>" +
-            "<p>Here is your result:</p><p>1,2,3,4,5</p>");
+            "<p>1,2,3,4,5</p>");
     }
 });
 /**
@@ -314,7 +314,7 @@ test('handleViewModeChange', function () {
             "<p>Command: view</p><p>Output: </p><table class=\"table\"><tbody><tr><td class=\"table\">1</td>" +
             "<td class=\"table\">2</td><td class=\"table\">3</td><td class=\"table\">4</td><td class=\"table\">" +
             "5</td></tr><tr><td class=\"table\">The</td><td class=\"table\">song</td><td class=\"table\">remains" +
-            "</td><td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table><p></p>");
+            "</td><td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table>");
     }
     //Switching it back to brief
     if (maybeInput instanceof HTMLInputElement) {
@@ -330,9 +330,9 @@ test('handleViewModeChange', function () {
             "<p>Command: view</p><p>Output: </p><table class=\"table\"><tbody><tr><td class=\"table\">1</td>" +
             "<td class=\"table\">2</td><td class=\"table\">3</td><td class=\"table\">4</td><td class=\"table\">" +
             "5</td></tr><tr><td class=\"table\">The</td><td class=\"table\">song</td><td class=\"table\">remains</td>" +
-            "<td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table><p></p><p>Changed to brief mode</p>" +
-            "<p>Output: </p><table class=\"table\"><tbody><tr><td class=\"table\">1</td><td class=\"table\">2</td><td class=\"table\"" +
+            "<td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table><p>Changed to brief mode</p>" +
+            "<table class=\"table\"><tbody><tr><td class=\"table\">1</td><td class=\"table\">2</td><td class=\"table\"" +
             ">3</td><td class=\"table\">4</td><td class=\"table\">5</td></tr><tr><td class=\"table\">The</td><td class=\"table\">song</td>" +
-            "<td class=\"table\">remains</td><td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table><p></p>");
+            "<td class=\"table\">remains</td><td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table>");
     }
 });

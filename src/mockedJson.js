@@ -35,4 +35,7 @@ dataMap.set("mockedData2.csv", csvData2);
 function resetCSV() {
     currentCSV = [];
 }
-export { loadCSV, resetCSV, currentCSV };
+function getCSV() {
+    return currentCSV;
+}
+export { loadCSV, resetCSV, getCSV };

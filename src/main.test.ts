@@ -60,7 +60,7 @@ test('handleLoadRequest', () => {
     ["The", "song", "remains", "the", "same."],
   ]
 
-  expect(mock.currentCSV).toEqual(csvData);
+  expect(mock.getCSV()).toEqual(csvData);
 })
 
 /**
@@ -86,14 +86,14 @@ test('invalid load request', () => {
  */
 test('loadCSV', () => {
   let csvData: (Number | String)[][] = []
-  expect(mock.currentCSV).toEqual(csvData)
+  expect(mock.getCSV()).toEqual(csvData)
 
   mock.loadCSV("mockedData1.csv")
   csvData = [
     [1, 2, 3, 4, 5],
     ["The", "song", "remains", "the", "same."],
   ]
-  expect(mock.currentCSV).toEqual(csvData)
+  expect(mock.getCSV()).toEqual(csvData)
 
   mock.loadCSV("mockedData2.csv")
   csvData = [
@@ -101,7 +101,7 @@ test('loadCSV', () => {
     ["Nim", "Telson", "CSCI 0320", "Student"],
     ["Tim", "Nelson", "CSCI 0320", "Student"],
   ];
-  expect(mock.currentCSV).toEqual(csvData);
+  expect(mock.getCSV()).toEqual(csvData);
 })
 
 
@@ -122,9 +122,9 @@ test('handleViewRequest', () => {
   var replHistory = document.getElementById("repl-history");
   if (replHistory instanceof HTMLElement) {
     expect(replHistory.innerHTML.trim()).toBe(
-      `<p>Output: </p><table class=\"table\"><tbody><tr><td class=\"table\">1</td><td class=\"table\">2</td>` +
+      `<table class=\"table\"><tbody><tr><td class=\"table\">1</td><td class=\"table\">2</td>` +
         `<td class=\"table\">3</td><td class=\"table\">4</td><td class=\"table\">5</td></tr><tr><td class=\"table\">The</td>` +
-        `<td class=\"table\">song</td><td class=\"table\">remains</td><td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table><p></p>`
+        `<td class=\"table\">song</td><td class=\"table\">remains</td><td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table>`
     );
   }
 })
@@ -167,7 +167,7 @@ test('handleNoCSVSearch',() => {
   var replHistory = document.getElementById("repl-history");
   if (replHistory instanceof HTMLElement) {
     expect(replHistory.innerHTML.trim()).toBe(
-      `<p>Here is your result:</p><p>Sorry we could not find a CSV file to serach :(, please try again</p>`
+      `<p>Sorry we could not find a CSV file to serach :(, please try again</p>`
     );
   }
 })
@@ -189,7 +189,7 @@ test('handleNormalSearch',() => {
   var replHistory = document.getElementById("repl-history");
   if (replHistory instanceof HTMLElement) {
     expect(replHistory.innerHTML.trim()).toBe(
-      `<p>Here is your result:</p><p>1,2,3,4,5</p>`
+      `<p>1,2,3,4,5</p>`
     );
   }
 })
@@ -211,7 +211,7 @@ test('handleNormalSearch2',() => {
     var replHistory = document.getElementById("repl-history");
     if (replHistory instanceof HTMLElement) {
       expect(replHistory.innerHTML.trim()).toBe(
-        `<p>Here is your result:</p><p>First Name,Last Name,Class,Role</p>`
+        `<p>First Name,Last Name,Class,Role</p>`
       );
     }
 })
@@ -252,10 +252,10 @@ test('handleModeViewStartBrief',() => {
   var replHistory = document.getElementById("repl-history");
   if (replHistory instanceof HTMLElement) {
     expect(replHistory.innerHTML.trim()).toBe(
-      `<p>Output: </p><table class=\"table\"><tbody><tr><td class=\"table\">1</td><td class=\"table\">2</td><td` +
+      `<table class=\"table\"><tbody><tr><td class=\"table\">1</td><td class=\"table\">2</td><td` +
       ` class=\"table\">3</td><td class=\"table\">4</td><td class=\"table\">5</td></tr><tr><td class=\"table\">` +
       `The</td><td class=\"table\">song</td><td class=\"table\">remains</td><td class=\"table\">the</td><td` +
-      ` class=\"table\">same.</td></tr></tbody></table><p></p>`
+      ` class=\"table\">same.</td></tr></tbody></table>`
     );
   }
 })
@@ -279,7 +279,7 @@ test('handleModeViewStartBrief',() => {
   
   if (replHistory instanceof HTMLElement) {
     expect(replHistory.innerHTML.trim()).toBe(
-      `<p>Here is your result:</p><p>1,2,3,4,5</p>`
+      `<p>1,2,3,4,5</p>`
     );
   }
 })
@@ -366,7 +366,7 @@ test('handleSearchModeChange',() => {
   if (replHistory instanceof HTMLElement) {
     expect(replHistory.innerHTML.trim()).toBe(
       `<p>Changed to verbose mode</p>` + 
-      `<p>Command: search</p><p>Here is your result:</p><p>1,2,3,4,5</p>`
+      `<p>Command: search</p><p>Output: 1,2,3,4,5</p>`
     );
   }
   
@@ -384,9 +384,9 @@ test('handleSearchModeChange',() => {
   if (replHistory instanceof HTMLElement) {
     expect(replHistory.innerHTML.trim()).toBe(
       `<p>Changed to verbose mode</p>` + 
-      `<p>Command: search</p><p>Here is your result:</p><p>1,2,3,4,5</p>` +
+      `<p>Command: search</p><p>Output: 1,2,3,4,5</p>` +
       `<p>Changed to brief mode</p>` +
-      `<p>Here is your result:</p><p>1,2,3,4,5</p>`
+      `<p>1,2,3,4,5</p>`
     );
   }
 })
@@ -418,7 +418,7 @@ test('handleViewModeChange',() => {
       `<p>Command: view</p><p>Output: </p><table class=\"table\"><tbody><tr><td class=\"table\">1</td>` +
       `<td class=\"table\">2</td><td class=\"table\">3</td><td class=\"table\">4</td><td class=\"table\">` +
       `5</td></tr><tr><td class=\"table\">The</td><td class=\"table\">song</td><td class=\"table\">remains` +
-      `</td><td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table><p></p>`
+      `</td><td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table>`
     );
   }
   
@@ -439,10 +439,10 @@ test('handleViewModeChange',() => {
       `<p>Command: view</p><p>Output: </p><table class=\"table\"><tbody><tr><td class=\"table\">1</td>` +
       `<td class=\"table\">2</td><td class=\"table\">3</td><td class=\"table\">4</td><td class=\"table\">` +
       `5</td></tr><tr><td class=\"table\">The</td><td class=\"table\">song</td><td class=\"table\">remains</td>` +
-      `<td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table><p></p><p>Changed to brief mode</p>` +
-      `<p>Output: </p><table class=\"table\"><tbody><tr><td class=\"table\">1</td><td class=\"table\">2</td><td class=\"table\"` +
+      `<td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table><p>Changed to brief mode</p>` +
+      `<table class=\"table\"><tbody><tr><td class=\"table\">1</td><td class=\"table\">2</td><td class=\"table\"` +
       `>3</td><td class=\"table\">4</td><td class=\"table\">5</td></tr><tr><td class=\"table\">The</td><td class=\"table\">song</td>` +
-      `<td class=\"table\">remains</td><td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table><p></p>`
+      `<td class=\"table\">remains</td><td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table>`
     );
   }
 })

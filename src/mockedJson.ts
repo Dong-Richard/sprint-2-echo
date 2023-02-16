@@ -42,4 +42,8 @@ function resetCSV() {
     currentCSV = []
 }
 
-export {loadCSV, resetCSV, currentCSV}
+function getCSV(): (Number | String) [][]{
+    return currentCSV
+}
+
+export {loadCSV, resetCSV, getCSV}

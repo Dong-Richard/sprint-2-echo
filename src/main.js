@@ -1,4 +1,4 @@
-import { loadCSV, currentCSV } from "./mockedJson.js";
+import { loadCSV, getCSV } from "./mockedJson.js";
 var history = [];
 // The window.onload callback is invoked when the window is first loaded by the browser
 window.onload = function () {
@@ -52,7 +52,7 @@ function handleButtonClick() {
             handleViewRequest(maybeInput.value);
         }
         else if (command === "search") {
-            handleSearchRequest();
+            handleSearchRequest(maybeInput.value);
         }
         else if (command === "mode") {
             handleModeRequest();
@@ -81,7 +81,7 @@ function handleButtonClick() {
  */
 function tableConverter() {
     var result = "<table class = 'table'>";
-    currentCSV.forEach(function (output) {
+    getCSV().forEach(function (output) {
         result += "<tr>";
         output.forEach(function (thing) {
             result += "<td class = 'table'>" + thing + "</td>";
@@ -103,8 +103,15 @@ function handleViewRequest(input) {
     if (mode == 1) {
         historyOutput.push("<p>Command: ".concat(input, "</p>"));
     }
-    if (currentCSV.length != 0) {
-        historyOutput.push("<p>Output: " + tableConverter() + "</p>");
+    var output = '';
+    if (mode == 1) {
+        output = '<p>Output: </p>';
+    }
+    else {
+        output = '';
+    }
+    if (getCSV().length != 0) {
+        historyOutput.push(output + tableConverter());
     }
     else {
         historyOutput.push("<p>No CSV Loaded!</p>");
@@ -159,19 +166,25 @@ function handleLoadRequest(input) {
  * yet. Otherwise is the CSV is loaded in, we just print the first row of that csv no matter what to mock
  * what this fucntion would do
  */
-function handleSearchRequest() {
+function handleSearchRequest(input) {
     var historyOutput = new Array();
     if (mode == 1) {
-        var modeChange = "<p>Command: search</p>";
+        var modeChange = "<p>Command: ".concat(input, "</p>");
         historyOutput.push(modeChange);
     }
-    var output = "<p>Here is your result:</p>";
-    if (currentCSV.length != 0) {
-        output += "<p>" + currentCSV[0] + "</p>";
+    var output = '';
+    if (mode == 1) {
+        output = '<p>Output: ';
+    }
+    else {
+        output = '<p>';
+    }
+    if (getCSV().length != 0) {
+        output += getCSV()[0] + "</p>";
     }
     else {
         output +=
-            "<p>Sorry we could not find a CSV file to serach :(, please try again</p>";
+            "Sorry we could not find a CSV file to serach :(, please try again</p>";
     }
     historyOutput.push(output);
     history.push(historyOutput);
