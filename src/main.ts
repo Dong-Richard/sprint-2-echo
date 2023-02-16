@@ -1,4 +1,4 @@
-import { loadCSV, getCSV } from "./mockedJson.js";
+import { loadCSV, getCSV, searchCSV } from "./mockedJson.js";
 
 let history: Array<Array<string>> = [];
 
@@ -185,7 +185,7 @@ function handleSearchRequest(input: string) {
     output = '<p>'
   }
   if (getCSV().length != 0) {
-    output += getCSV()[0] + "</p>";
+    output += searchCSV() + "</p>";
   } else {
     output +=
       "Sorry we could not find a CSV file to serach :(, please try again</p>";
@@ -237,4 +237,4 @@ function clearHistory() {
 
 // Provide this to other modules (e.g., for testing!)
 // The configuration in this project will require /something/ to be exported.
-export { handleButtonClick, clearHistory };
+export { handleButtonClick, clearHistory};

@@ -1,4 +1,4 @@
-import { loadCSV, getCSV } from "./mockedJson.js";
+import { loadCSV, getCSV, searchCSV } from "./mockedJson.js";
 var history = [];
 // The window.onload callback is invoked when the window is first loaded by the browser
 window.onload = function () {
@@ -180,7 +180,7 @@ function handleSearchRequest(input) {
         output = '<p>';
     }
     if (getCSV().length != 0) {
-        output += getCSV()[0] + "</p>";
+        output += searchCSV() + "</p>";
     }
     else {
         output +=

@@ -38,4 +38,7 @@ function resetCSV() {
 function getCSV() {
     return currentCSV;
 }
-export { loadCSV, resetCSV, getCSV };
+function searchCSV() {
+    return currentCSV[0];
+}
+export { loadCSV, resetCSV, getCSV, searchCSV };

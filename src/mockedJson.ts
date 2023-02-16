@@ -46,4 +46,8 @@ function getCSV(): (Number | String) [][]{
     return currentCSV
 }
 
-export {loadCSV, resetCSV, getCSV}
+function searchCSV(): (Number | String)[] {
+    return currentCSV[0]
+}
+
+export {loadCSV, resetCSV, getCSV, searchCSV}
