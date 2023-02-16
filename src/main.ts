@@ -80,9 +80,9 @@ function handleButtonClick() {
  * string which is then returned by this function
  * @returns: this function returns the html table string
  */
-function tableConverter(): string {
+function tableConverter(csvData: (String | Number)[][]): string {
   let result: string = "<table class = 'table'>";
-  getCSV().forEach((output: (String | Number)[]) => {
+  csvData.forEach((output: (String | Number)[]) => {
     result += "<tr>";
     output.forEach((thing: String | Number) => {
       result += "<td class = 'table'>" + thing + "</td>";
@@ -112,7 +112,7 @@ function handleViewRequest(input: string) {
     output = ''
   }
   if (getCSV().length != 0) {
-    historyOutput.push(output + tableConverter());
+    historyOutput.push(output + tableConverter(getCSV()));
   } else {
     historyOutput.push("<p>No CSV Loaded!</p>");
   }
