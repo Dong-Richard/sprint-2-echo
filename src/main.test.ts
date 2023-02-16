@@ -20,6 +20,24 @@ beforeEach( () => {
   document.body.innerHTML = startHTML
 })
 
+
+/**
+ * Tests that invalid requests work
+ */
+test('handleInvalidRequest', () => {
+  var maybeInput = document.getElementById('repl-command-box');
+
+  // Assumption: there's only one thing
+  if(maybeInput instanceof HTMLInputElement){
+    maybeInput.value = "something invalid"
+  }
+  main.handleButtonClick()
+  var replHistory = document.getElementById("repl-history");
+  if(replHistory instanceof HTMLElement){
+    expect(replHistory.innerHTML.trim()).toBe("<p>Output: Not a valid command</p>")
+  }
+})
+
 /**
  * Tests that load requests print the correct html 
  */
@@ -132,22 +150,6 @@ test('invalid view request', () => {
 })
 
 
-/**
- * Tests that invalid requests work
- */
-test('handleInvalidRequest', () => {
-  var maybeInput = document.getElementById('repl-command-box');
-
-  // Assumption: there's only one thing
-  if(maybeInput instanceof HTMLInputElement){
-    maybeInput.value = "something invalid"
-  }
-  main.handleButtonClick()
-  var replHistory = document.getElementById("repl-history");
-  if(replHistory instanceof HTMLElement){
-    expect(replHistory.innerHTML.trim()).toBe("<p>Output: Not a valid command</p>")
-  }
-})
 
 /**
  * Tests that seraching works when there is no CSV sends the right message

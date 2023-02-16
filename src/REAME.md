@@ -1,6 +1,9 @@
 # Sprint 2 Echo
 
-**Link to repo**:https://github.com/cs0320-s2023/sprint-2-rdong14-yzike
+## Project Details 
+Project Name: Echo (Sprint 2)
+Team memebers: Richard Dong (rdong14) & Yabeke Zike (yzike)
+Repo Link: https://github.com/cs0320-s2023/sprint-2-rdong14-yzike
 
 ## Design Choices
 
@@ -28,17 +31,23 @@ clearHistory is a public method used in testing to clear the history after each 
 
 ## Known Bugs
 
-N/a
+No errors or bugs in implementation found
 
 ## Testing
 
-My testing suite has five tests and a beforeEach function. 
+We have one testing suite within our main.test class which thoroughly checks that the functionallity of our echo program fits all the user strories accordingly and looks at differnt edge along with basic cases to test our implementation.
 
-### HTML Elements testing
-[something here, idk if we actually need to test this]
+Firslty, we check that submiting and invlaid command that is not one the ones that we have defined throws an error messge to the repl history
 
-### Logic testing
-The program should have the functionality to do [a certain number of] things: output mockedJson's contents upon a get request, and output an error message upon a submission of anything else. The next three tests each test one of these cases, respectively. 
+Secondly, our next three tests, we look at the functionality of the load fucntion by first testing that it prints the correct html to the repl histroy when a CSV loaded correclty and when the CSV load request is invalid. Then we look at if the load command loads the data of the CSV correctly by using the mock CSVs.
+
+Next, we test the view command functionallity by making sure that we can view a file normally after loading in a CSV and making sure that we see the correct data from the CSV in a table. We also test that the view command does not work when we do not read in a correct CSV.
+
+Then we test our search method, by first looking at the case that there is no CSV to search on which should then throw a message informing the user of that. Then we test that the serach works normally with 2 differnt CSVs to ensure that it works as it should.
+
+Lastly, the rest of our testing class looks at the mode command by first checking that when using every other command they start off in breif mode. Then we look at the mode commnad prints the right message into the repl hisotry, displaying that it is swtiching modes. Then we check that every other command works with the mode swtiching back and forth between verbose and brief and that this switching works along with the fucntionliaty of those commands
+
+
 
 ## How to run
 

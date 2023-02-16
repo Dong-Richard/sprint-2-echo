@@ -3,7 +3,7 @@ var history = [];
 // The window.onload callback is invoked when the window is first loaded by the browser
 window.onload = function () {
     // If you're adding an event for a button click, do something similar.
-    // The event name in that case is "click", not "keypress", and the type of the element 
+    // The event name in that case is "click", not "keypress", and the type of the element
     // should be HTMLButtonElement. The handler function for a "click" takes no arguments.
     prepareButtonClick();
 };
@@ -16,7 +16,7 @@ window.onload = function () {
  * @param: none
  */
 function prepareButtonClick() {
-    var button = document.getElementById('submit-button');
+    var button = document.getElementById("submit-button");
     if (button == null) {
         console.log("Couldn't find input element");
     }
@@ -39,7 +39,7 @@ function prepareButtonClick() {
  * @param: none
  */
 function handleButtonClick() {
-    var maybeInput = document.getElementById('repl-command-box');
+    var maybeInput = document.getElementById("repl-command-box");
     if (maybeInput == null) {
         console.log("Couldn't find input element");
     }
@@ -144,7 +144,7 @@ function handleLoadRequest(input) {
     if (mode == 1) {
         historyOutput.push("<p>Command: ".concat(input, "</p>"));
     }
-    if (loadCSV(input.split(' ')[1])) {
+    if (loadCSV(input.split(" ")[1])) {
         historyOutput.push("<p>CSV Loaded Successfully</p>");
     }
     else {
@@ -170,7 +170,8 @@ function handleSearchRequest() {
         output += "<p>" + currentCSV[0] + "</p>";
     }
     else {
-        output += "<p>Sorry we could not find a CSV file to serach :(, please try again</p>";
+        output +=
+            "<p>Sorry we could not find a CSV file to serach :(, please try again</p>";
     }
     historyOutput.push(output);
     history.push(historyOutput);
@@ -186,22 +187,22 @@ function handleSearchRequest() {
  * @param: none
  */
 function renderHTML() {
-    var newHtml = '';
+    var newHtml = "";
     // For every guess array in GUESSES...
     history.forEach(function (output) {
         output.forEach(function (line) {
             newHtml += "".concat(line);
         });
     });
-    // Replace the contents of the old-rounds <div> with the HTML we generated above    
+    // Replace the contents of the old-rounds <div> with the HTML we generated above
     // Since I prefer not to use "id" and use "class" instead here, we have to do [0]...
-    var oldREPLHistory = document.getElementById('repl-history');
+    var oldREPLHistory = document.getElementById("repl-history");
     if (oldREPLHistory == null) {
-        console.log('Could not find old-REPL element');
+        console.log("Could not find old-REPL element");
         return;
     }
     else if (!(oldREPLHistory instanceof HTMLElement)) {
-        console.log('first old-REPL element was not an HTMLElement');
+        console.log("first old-REPL element was not an HTMLElement");
         return;
     }
     else {
