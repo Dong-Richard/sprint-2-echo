@@ -65,8 +65,6 @@ Then we test our search method, by first looking at the case that there is no CS
 
 Lastly, the rest of our testing class looks at the mode command by first checking that when using every other command they start off in breif mode. Then we look at the mode commnad prints the right message into the repl hisotry, displaying that it is swtiching modes. Then we check that every other command works with the mode swtiching back and forth between verbose and brief and that this switching works along with the fucntionliaty of those commands
 
-
-
 ## How to run
 
 To start the front-end HTML page, right click on index.html and select "Open with Live Server" or "Run" which will open a local-run version of the frontent on your default browser. To run the unit tests, make sure you in are in the "sprint1" directory and run "npm test" in the terminal. 
