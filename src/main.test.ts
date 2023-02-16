@@ -137,7 +137,8 @@ test('invalid view request', () => {
  */
 test('handleInvalidRequest', () => {
   var maybeInput = document.getElementById('repl-command-box');
-    // Assumption: there's only one thing
+
+  // Assumption: there's only one thing
   if(maybeInput instanceof HTMLInputElement){
     maybeInput.value = "something invalid"
   }
@@ -147,5 +148,303 @@ test('handleInvalidRequest', () => {
     expect(replHistory.innerHTML.trim()).toBe("<p>Output: Not a valid command</p>")
   }
 })
+
+/**
+ * Tests that seraching works when there is no CSV sends the right message
+ */
+test('handleNoCSVSearch',() => {
+  var maybeInput = document.getElementById('repl-command-box');
+  
+  // Assumption: there's only one thing
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "search";
+  }
+
+
+  main.handleButtonClick();
+  var replHistory = document.getElementById("repl-history");
+  if (replHistory instanceof HTMLElement) {
+    expect(replHistory.innerHTML.trim()).toBe(
+      `<p>Here is your result:</p><p>Sorry we could not find a CSV file to serach :(, please try again</p>`
+    );
+  }
+})
+
+/**
+ * Tests that seraching works normally when the CSV is loaded 
+ */
+test('handleNormalSearch',() => {
+  var maybeInput = document.getElementById('repl-command-box');
+  //we need to load the csv
+  mock.loadCSV("mockedData1.csv");
+
+  // Assumption: there's only one thing
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "search";
+  }
+  main.handleButtonClick();
+
+  var replHistory = document.getElementById("repl-history");
+  if (replHistory instanceof HTMLElement) {
+    expect(replHistory.innerHTML.trim()).toBe(
+      `<p>Here is your result:</p><p>1,2,3,4,5</p>`
+    );
+  }
+})
+
+/**
+ * Tests that seraching works normally when the CSV is loaded part 2
+ */
+test('handleNormalSearch2',() => {
+  var maybeInput = document.getElementById('repl-command-box');
+    //we need to load csv
+    mock.loadCSV("mockedData2.csv");
+
+    // Assumption: there's only one thing
+    if (maybeInput instanceof HTMLInputElement) {
+      maybeInput.value = "search";
+    }
+    main.handleButtonClick();
+
+    var replHistory = document.getElementById("repl-history");
+    if (replHistory instanceof HTMLElement) {
+      expect(replHistory.innerHTML.trim()).toBe(
+        `<p>Here is your result:</p><p>First Name,Last Name,Class,Role</p>`
+      );
+    }
+})
+
+/**
+ * Tests that the mode starts off as breif with the load command
+ */
+test('handleModeLoadStartBrief',() => {
+  var maybeInput = document.getElementById('repl-command-box');
+  
+  // Assumption: there's only one thing
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "load_csv mockedData1.csv";
+  }
+  main.handleButtonClick();
+
+  var replHistory = document.getElementById("repl-history");
+  if (replHistory instanceof HTMLElement) {
+    expect(replHistory.innerHTML.trim()).toBe(
+      `<p>CSV Loaded Successfully</p>`
+    );
+  }
+})
+
+/**
+ * Tests that the mode starts off as breif with the view command
+ */
+test('handleModeViewStartBrief',() => {
+  var maybeInput = document.getElementById('repl-command-box');
+  mock.loadCSV("mockedData1.csv");
+
+  // Assumption: there's only one thing
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "view";
+  }
+  main.handleButtonClick();
+
+  var replHistory = document.getElementById("repl-history");
+  if (replHistory instanceof HTMLElement) {
+    expect(replHistory.innerHTML.trim()).toBe(
+      `<p>Output: </p><table class=\"table\"><tbody><tr><td class=\"table\">1</td><td class=\"table\">2</td><td` +
+      ` class=\"table\">3</td><td class=\"table\">4</td><td class=\"table\">5</td></tr><tr><td class=\"table\">` +
+      `The</td><td class=\"table\">song</td><td class=\"table\">remains</td><td class=\"table\">the</td><td` +
+      ` class=\"table\">same.</td></tr></tbody></table><p></p>`
+    );
+  }
+})
+
+/**
+ * Tests that the mode starts off as breif with the search command
+ */
+test('handleModeViewStartBrief',() => {
+  var maybeInput = document.getElementById('repl-command-box');
+  //load in csv
+  mock.loadCSV("mockedData1.csv");
+
+  // Assumption: there's only one thing
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "search";
+  }
+
+  main.handleButtonClick();
+
+  var replHistory = document.getElementById("repl-history");
+  
+  if (replHistory instanceof HTMLElement) {
+    expect(replHistory.innerHTML.trim()).toBe(
+      `<p>Here is your result:</p><p>1,2,3,4,5</p>`
+    );
+  }
+})
+
+/**
+ * Tests that the mode command swtiches between breif and verbose
+ */
+test('handleModeSwitches',() => {
+  var maybeInput = document.getElementById('repl-command-box');
+  var replHistory = document.getElementById("repl-history");
+  mock.loadCSV("mockedData1.csv");
+
+  // Assumption: there's only one thing
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "mode";
+  }
+  main.handleButtonClick();
+
+  if (replHistory instanceof HTMLElement) {
+    expect(replHistory.innerHTML.trim()).toBe(
+      `<p>Changed to verbose mode</p>`
+    );
+  }
+})
+
+/**
+ * Tests when we swtich between verbose and breif when using the load command
+ */
+test('handleLoadModeChange',() => {
+  var maybeInput = document.getElementById('repl-command-box');
+  var replHistory = document.getElementById("repl-history");
+
+  // Assumption: there's only one thing
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "mode";
+  }
+  main.handleButtonClick();
+
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "load_csv mockedData1.csv";
+  }
+  main.handleButtonClick();
+  
+  if (replHistory instanceof HTMLElement) {
+    expect(replHistory.innerHTML.trim()).toBe(
+      `<p>Changed to verbose mode</p>` + 
+      `<p>Command: load_csv mockedData1.csv</p><p>CSV Loaded Successfully</p>`
+    );
+  }
+
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "mode";
+  }
+  main.handleButtonClick();
+
+  if (replHistory instanceof HTMLElement) {
+    expect(replHistory.innerHTML.trim()).toBe(
+      `<p>Changed to verbose mode</p>` + 
+      `<p>Command: load_csv mockedData1.csv</p><p>CSV Loaded Successfully</p><p>Changed to brief mode</p>`
+    );
+  }
+
+})
+
+/**
+ * Tests when we swtich between verbose and breif when using the search command
+ */
+test('handleSearchModeChange',() => {
+  var maybeInput = document.getElementById('repl-command-box');
+  var replHistory = document.getElementById("repl-history");
+  mock.loadCSV("mockedData1.csv");
+
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "mode";
+  }
+  main.handleButtonClick();
+  
+
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "search";
+  }
+  main.handleButtonClick();
+  
+  if (replHistory instanceof HTMLElement) {
+    expect(replHistory.innerHTML.trim()).toBe(
+      `<p>Changed to verbose mode</p>` + 
+      `<p>Command: search</p><p>Here is your result:</p><p>1,2,3,4,5</p>`
+    );
+  }
+  
+  //Switching it back to brief
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "mode";
+  }
+  main.handleButtonClick();
+
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "search";
+  }
+  main.handleButtonClick();
+
+  if (replHistory instanceof HTMLElement) {
+    expect(replHistory.innerHTML.trim()).toBe(
+      `<p>Changed to verbose mode</p>` + 
+      `<p>Command: search</p><p>Here is your result:</p><p>1,2,3,4,5</p>` +
+      `<p>Changed to brief mode</p>` +
+      `<p>Here is your result:</p><p>1,2,3,4,5</p>`
+    );
+  }
+})
+
+/**
+ * Tests when we swtich between verbose and breif when using the view command
+ */
+test('handleViewModeChange',() => {
+  var maybeInput = document.getElementById('repl-command-box');
+  var replHistory = document.getElementById("repl-history");
+  mock.loadCSV("mockedData1.csv");
+
+  // Assumption: there's only one thing
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "mode";
+  }
+  main.handleButtonClick();
+  
+
+  // Assumption: there's only one thing
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "view";
+  }
+  main.handleButtonClick();
+  
+  if (replHistory instanceof HTMLElement) {
+    expect(replHistory.innerHTML.trim()).toBe(
+      `<p>Changed to verbose mode</p>` + 
+      `<p>Command: view</p><p>Output: </p><table class=\"table\"><tbody><tr><td class=\"table\">1</td>` +
+      `<td class=\"table\">2</td><td class=\"table\">3</td><td class=\"table\">4</td><td class=\"table\">` +
+      `5</td></tr><tr><td class=\"table\">The</td><td class=\"table\">song</td><td class=\"table\">remains` +
+      `</td><td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table><p></p>`
+    );
+  }
+  
+  //Switching it back to brief
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "mode";
+  }
+  main.handleButtonClick();
+
+  if (maybeInput instanceof HTMLInputElement) {
+    maybeInput.value = "view";
+  }
+  main.handleButtonClick();
+
+  if (replHistory instanceof HTMLElement) {
+    expect(replHistory.innerHTML.trim()).toBe(
+      `<p>Changed to verbose mode</p>` + 
+      `<p>Command: view</p><p>Output: </p><table class=\"table\"><tbody><tr><td class=\"table\">1</td>` +
+      `<td class=\"table\">2</td><td class=\"table\">3</td><td class=\"table\">4</td><td class=\"table\">` +
+      `5</td></tr><tr><td class=\"table\">The</td><td class=\"table\">song</td><td class=\"table\">remains</td>` +
+      `<td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table><p></p><p>Changed to brief mode</p>` +
+      `<p>Output: </p><table class=\"table\"><tbody><tr><td class=\"table\">1</td><td class=\"table\">2</td><td class=\"table\"` +
+      `>3</td><td class=\"table\">4</td><td class=\"table\">5</td></tr><tr><td class=\"table\">The</td><td class=\"table\">song</td>` +
+      `<td class=\"table\">remains</td><td class=\"table\">the</td><td class=\"table\">same.</td></tr></tbody></table><p></p>`
+    );
+  }
+})
+
+
 
 

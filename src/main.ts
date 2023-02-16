@@ -146,7 +146,7 @@ function handleModeRequest(){
 function handleLoadRequest(input: string){
     let historyOutput: Array<string> = new Array()
     if (mode == 1) {
-      historyOutput.push(`Command: ${input}`)
+      historyOutput.push(`<p>Command: ${input}</p>`)
     }
     if (loadCSV(input.split(' ')[1])){
         historyOutput.push("<p>CSV Loaded Successfully</p>")
@@ -165,8 +165,12 @@ function handleLoadRequest(input: string){
  * what this fucntion would do 
  */
 function handleSearchRequest(){
-    let output : string = "<p>Here is your result:</p>"
     let historyOutput: Array<string> = new Array()
+    if(mode == 1){
+        let modeChange : string = "<p>Command: search</p>"
+        historyOutput.push(modeChange)
+    }
+    let output : string = "<p>Here is your result:</p>"
     if(currentCSV.length != 0){
         output += "<p>" + currentCSV[0] + "</p>"
     }else{

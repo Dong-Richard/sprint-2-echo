@@ -142,7 +142,7 @@ function handleModeRequest() {
 function handleLoadRequest(input) {
     var historyOutput = new Array();
     if (mode == 1) {
-        historyOutput.push("Command: ".concat(input));
+        historyOutput.push("<p>Command: ".concat(input, "</p>"));
     }
     if (loadCSV(input.split(' ')[1])) {
         historyOutput.push("<p>CSV Loaded Successfully</p>");
@@ -160,8 +160,12 @@ function handleLoadRequest(input) {
  * what this fucntion would do
  */
 function handleSearchRequest() {
-    var output = "<p>Here is your result:</p>";
     var historyOutput = new Array();
+    if (mode == 1) {
+        var modeChange = "<p>Command: search</p>";
+        historyOutput.push(modeChange);
+    }
+    var output = "<p>Here is your result:</p>";
     if (currentCSV.length != 0) {
         output += "<p>" + currentCSV[0] + "</p>";
     }
@@ -206,6 +210,7 @@ function renderHTML() {
 }
 function clearHistory() {
     history = [];
+    mode = 0;
 }
 // Provide this to other modules (e.g., for testing!)
 // The configuration in this project will require /something/ to be exported.
