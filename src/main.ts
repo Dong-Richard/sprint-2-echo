@@ -185,7 +185,7 @@ function handleSearchRequest(input: string) {
     output = '<p>'
   }
   if (getCSV().length != 0) {
-    output += tableConverter(searchCSV()) + "</p>";
+    output += tableConverter(searchCSV(input)) + "</p>";
   } else {
     output +=
       "Sorry we could not find a CSV file to serach :(, please try again</p>";

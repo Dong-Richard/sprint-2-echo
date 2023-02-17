@@ -18,7 +18,7 @@ This stores whether the program is in brief mode or verbose mode, 1 for verbose,
 ### (Number | String)[][] currentCSV
 Array which locally stores the loaded csv in memory. 
 
-Our program consists of one typescript file, which contains event handlers for a REPL and a button. 
+Our program consists of two typescript files, which contains event handlers for a REPL and a button, and a mocked csv backend. 
 
 ### prepareButtonClick()
 prepareButtonClick() is a helper method that sets up an interactable button in the website. They will go into the HTML and try to find the appropriate HTML elements that they are attatching listeners to, and then attatch the appropriate eventhandlers to them.
@@ -36,7 +36,7 @@ handleSearchRequest would call the backend to search through the loaded csv for 
 handleModeRequest will change the mode between brief and verbose mode. To do this, it switches a global variable "mode" between 0 and 1.
 
 ### handleLoadRequest()
-handleLoadRequest will load the csv with the specified filepath to memory. This will be in an array in mockedJson, called "currentCSV"
+handleLoadRequest will load the csv with the specified filepath to memory, by calling "loadCSV()" This will be in an array in mockedJson, called "currentCSV"
 
 ### renderHTML()
 renderHTML will take the contents of the history arraylist, and update the repl-history div's internal HTML with the contents of the history arraylist. 
@@ -46,6 +46,12 @@ clearHistory is a public method used in testing to clear the history after each 
 
 ### tableConverter()
 tableConverter is a helper method that will generate the HTML for a table containing the data in currentCSV. 
+
+### loadCSV()
+loadCSV will load the requested csv into memory from the filepath. 
+
+### searchCSV()
+searchCSV is the placeholder search function. In this function, the real code would call the backend and search the CSV in memory for instances of the search query at the specified column, and have it return a 2D array of numbers or strings. In this code, since we're mocking, we just return a 2d array with the first row of the loaded csv. 
 
 ## Known Bugs
 

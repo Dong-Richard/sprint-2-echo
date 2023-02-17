@@ -180,7 +180,7 @@ function handleSearchRequest(input) {
         output = '<p>';
     }
     if (getCSV().length != 0) {
-        output += tableConverter(searchCSV()) + "</p>";
+        output += tableConverter(searchCSV(input)) + "</p>";
     }
     else {
         output +=

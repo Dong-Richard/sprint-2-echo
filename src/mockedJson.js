@@ -35,10 +35,17 @@ dataMap.set("mockedData2.csv", csvData2);
 function resetCSV() {
     currentCSV = [];
 }
+//getter method for currentCSV, avoid exposing the array
 function getCSV() {
     return currentCSV;
 }
-function searchCSV() {
+/**
+ * placeholder function for search, it should call the backend and return a 2D array.
+ *
+ * @param input The input string, which should contain the column and value to search for. Here, it does nothing.
+ * @returns The search result for search
+ */
+function searchCSV(input) {
     var result = [];
     result.push(currentCSV[0]);
     return result;
