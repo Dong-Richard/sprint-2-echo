@@ -79,9 +79,9 @@ function handleButtonClick() {
  * string which is then returned by this function
  * @returns: this function returns the html table string
  */
-function tableConverter() {
+function tableConverter(csvData) {
     var result = "<table class = 'table'>";
-    getCSV().forEach(function (output) {
+    csvData.forEach(function (output) {
         result += "<tr>";
         output.forEach(function (thing) {
             result += "<td class = 'table'>" + thing + "</td>";
@@ -111,7 +111,7 @@ function handleViewRequest(input) {
         output = '';
     }
     if (getCSV().length != 0) {
-        historyOutput.push(output + tableConverter());
+        historyOutput.push(output + tableConverter(getCSV()));
     }
     else {
         historyOutput.push("<p>No CSV Loaded!</p>");
@@ -180,7 +180,7 @@ function handleSearchRequest(input) {
         output = '<p>';
     }
     if (getCSV().length != 0) {
-        output += searchCSV() + "</p>";
+        output += tableConverter(searchCSV()) + "</p>";
     }
     else {
         output +=

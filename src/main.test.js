@@ -142,7 +142,8 @@ test('handleNormalSearch', function () {
     main.handleButtonClick();
     var replHistory = document.getElementById("repl-history");
     if (replHistory instanceof HTMLElement) {
-        expect(replHistory.innerHTML.trim()).toBe("<p>1,2,3,4,5</p>");
+        expect(replHistory.innerHTML.trim()).toBe("<p></p><table class=\"table\"><tbody><tr><td class=\"table\">1</td>" +
+            "<td class=\"table\">2</td><td class=\"table\">3</td><td class=\"table\">4</td><td class=\"table\">5</td></tr></tbody></table><p></p>");
     }
 });
 /**
@@ -159,7 +160,8 @@ test('handleNormalSearch2', function () {
     main.handleButtonClick();
     var replHistory = document.getElementById("repl-history");
     if (replHistory instanceof HTMLElement) {
-        expect(replHistory.innerHTML.trim()).toBe("<p>First Name,Last Name,Class,Role</p>");
+        expect(replHistory.innerHTML.trim()).toBe("<p></p><table class=\"table\"><tbody><tr><td class=\"table\">First Name</td>" +
+            "<td class=\"table\">Last Name</td><td class=\"table\">Class</td><td class=\"table\">Role</td></tr></tbody></table><p></p>");
     }
 });
 /**
@@ -199,7 +201,7 @@ test('handleModeViewStartBrief', function () {
 /**
  * Tests that the mode starts off as breif with the search command
  */
-test('handleModeViewStartBrief', function () {
+test('handleModeSearchStartBrief', function () {
     var maybeInput = document.getElementById('repl-command-box');
     //load in csv
     mock.loadCSV("mockedData1.csv");
@@ -210,7 +212,8 @@ test('handleModeViewStartBrief', function () {
     main.handleButtonClick();
     var replHistory = document.getElementById("repl-history");
     if (replHistory instanceof HTMLElement) {
-        expect(replHistory.innerHTML.trim()).toBe("<p>1,2,3,4,5</p>");
+        expect(replHistory.innerHTML.trim()).toBe("<p></p><table class=\"table\"><tbody><tr><td class=\"table\">1</td>" +
+            "<td class=\"table\">2</td><td class=\"table\">3</td><td class=\"table\">4</td><td class=\"table\">5</td></tr></tbody></table><p></p>");
     }
 });
 /**
@@ -273,8 +276,8 @@ test('handleSearchModeChange', function () {
     }
     main.handleButtonClick();
     if (replHistory instanceof HTMLElement) {
-        expect(replHistory.innerHTML.trim()).toBe("<p>Changed to verbose mode</p>" +
-            "<p>Command: search</p><p>Output: 1,2,3,4,5</p>");
+        expect(replHistory.innerHTML.trim()).toBe("<p>Changed to verbose mode</p><p>Command: search</p><p>Output: </p><table class=\"table\"><tbody><tr>" +
+            "<td class=\"table\">1</td><td class=\"table\">2</td><td class=\"table\">3</td><td class=\"table\">4</td><td class=\"table\">5</td></tr></tbody></table><p></p>");
     }
     //Switching it back to brief
     if (maybeInput instanceof HTMLInputElement) {
@@ -286,10 +289,11 @@ test('handleSearchModeChange', function () {
     }
     main.handleButtonClick();
     if (replHistory instanceof HTMLElement) {
-        expect(replHistory.innerHTML.trim()).toBe("<p>Changed to verbose mode</p>" +
-            "<p>Command: search</p><p>Output: 1,2,3,4,5</p>" +
-            "<p>Changed to brief mode</p>" +
-            "<p>1,2,3,4,5</p>");
+        expect(replHistory.innerHTML.trim()).toBe("<p>Changed to verbose mode</p><p>Command: search</p><p>Output: </p><table class=\"table\"><tbody><tr>" +
+            "<td class=\"table\">1</td><td class=\"table\">2</td><td class=\"table\">3</td><td class=\"table\">4</td>" +
+            "<td class=\"table\">5</td></tr></tbody></table><p></p><p>Changed to brief mode</p><p></p><table class=\"table\"><tbody>" +
+            "<tr><td class=\"table\">1</td><td class=\"table\">2</td><td class=\"table\">3</td><td class=\"table\">4</td>" +
+            "<td class=\"table\">5</td></tr></tbody></table><p></p>");
     }
 });
 /**

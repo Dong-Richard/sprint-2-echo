@@ -46,8 +46,10 @@ function getCSV(): (Number | String) [][]{
     return currentCSV
 }
 
-function searchCSV(): (Number | String)[] {
-    return currentCSV[0]
+function searchCSV(): (Number | String)[][] {
+    let result: (Number | String)[][] = []
+    result.push(currentCSV[0])
+    return result
 }
 
 export {loadCSV, resetCSV, getCSV, searchCSV}

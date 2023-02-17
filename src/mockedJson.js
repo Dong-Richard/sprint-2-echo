@@ -39,6 +39,8 @@ function getCSV() {
     return currentCSV;
 }
 function searchCSV() {
-    return currentCSV[0];
+    var result = [];
+    result.push(currentCSV[0]);
+    return result;
 }
 export { loadCSV, resetCSV, getCSV, searchCSV };
