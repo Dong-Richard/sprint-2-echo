@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.js": "/Dong-Richard/sprint-2-echo/static/js/main.b53949e0.js",
-    "index.html": "/Dong-Richard/sprint-2-echo/index.html",
-    "main.b53949e0.js.map": "/Dong-Richard/sprint-2-echo/static/js/main.b53949e0.js.map"
+    "main.js": "/sprint-2-echo/static/js/main.b53949e0.js",
+    "index.html": "/sprint-2-echo/index.html",
+    "main.b53949e0.js.map": "/sprint-2-echo/static/js/main.b53949e0.js.map"
   },
   "entrypoints": [
     "static/js/main.b53949e0.js"
