@@ -1,5 +1,5 @@
 // all exports from main will now be available as main.X
-import * as main from './main';
+import * as main from '.';
 import * as mock from './mockedJson.js'
 
 const startHTML = 
